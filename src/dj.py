@@ -42,3 +42,4 @@ for i in collection_list:
             song_list.append(Song(artist, track))
 
 s = Spotify()
+s.create_playlist()
