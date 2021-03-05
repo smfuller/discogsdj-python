@@ -18,8 +18,9 @@ discogs_oauth_key = os.getenv("DISCOGS_CONSUMER_KEY")
 discogs_oauth_secret = os.getenv("DISCOGS_CONSUMER_SECRET")
 discogs_key = os.getenv('DISCOGS_MY_ACCESS_SECRET')
 discogs_token = os.getenv('DISCOGS_MY_ACCESS_TOKEN')
+discogs_username = os.getenv('DISCOGS_USERNAME')
 
-collection_uri = "https://api.discogs.com/users/lizardsprobably/collection"
+collection_uri = f"https://api.discogs.com/users/{discogs_username}/collection"
 
 oauth = f'OAuth oauth_consumer_key="{discogs_oauth_key}",oauth_token="{discogs_token}",' \
         'oauth_signature_method="HMAC-SHA1",' \
