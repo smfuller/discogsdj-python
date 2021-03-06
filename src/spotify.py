@@ -1,7 +1,5 @@
-import json
 import os
 import requests
-import re
 
 from datetime import datetime
 
@@ -16,13 +14,13 @@ class Spotify:
     playlist_uri = f"https://api.spotify.com/v1/users/{username}/playlists"
     search_uri = "https://api.spotify.com/v1/search"
     update_uri = "https://api.spotify.com/v1/playlists"
+    albums_uri = "https://api.spotify.com/v1/albums"
 
     headers = {'Authorization': f'Bearer {bearer_token}'}
 
-    def get_search_json(self, artist, album):
-        cleanup = re.sub(r' ', '+', f'{artist}+{album}')
-        j = requests.get(f"{self.search_uri}?q={cleanup}&type=album", headers=self.headers)
-        return j.json()
+    def get_search_json(self, album):
+        j = requests.get(f"{self.search_uri}?q={album}&type=album", headers=self.headers)
+        return j
 
     # TODO -- mirror remaining Spotify connector code from Kotlin version
     def create_playlist(self):
@@ -34,5 +32,16 @@ class Spotify:
         }
         print(playlist_json)
         j = requests.post(self.playlist_uri, headers=self.headers, json=playlist_json)
-        print(j.json())
         return j
+
+    def add_to_playlist(self, uris, playlist):
+        body_json = {
+            "uris": uris
+        }
+        j = requests.post(f"{self.update_uri}/{playlist}/tracks", headers=self.headers, json=body_json)
+        return j
+
+    def get_tracks(self, uri):
+        clean_uri = uri.replace("spotify:album:", "")
+        j = requests.get(f"{self.albums_uri}/{clean_uri}/tracks", headers=self.headers)
+        return j.json()
