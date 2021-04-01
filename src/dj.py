@@ -52,7 +52,6 @@ def main():
         if track not in clean_album_list:
             clean_album_list.append(track)
 
-    print(clean_album_list)
     s = Spotify()
     playlist = s.create_playlist()
 
