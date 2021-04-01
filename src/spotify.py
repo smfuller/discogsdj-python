@@ -30,7 +30,6 @@ class Spotify:
             "description": "Created by DiscogsDJ",
             "public": "false"
         }
-        print(playlist_json)
         j = requests.post(self.playlist_uri, headers=self.headers, json=playlist_json)
         return j
 
